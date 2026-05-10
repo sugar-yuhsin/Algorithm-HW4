@@ -1,4 +1,4 @@
 The shortest Hamiltonian cycle:
 1 13 6 9 4 5 11 12 14 2 7 3 10 8 1
 Total cost: 20093
-Time: 0.001764
+Time: 0.001850

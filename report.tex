@@ -1,3 +1,4 @@
+% Compile with: xelatex report.tex   (NOT pdflatex -- needs xeCJK for Chinese)
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{graphicx}
@@ -6,6 +7,9 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{xeCJK}
+\setCJKmainfont{PingFang TC}
+\usepackage{float}
 
 \lstset{
   basicstyle=\ttfamily\small,
@@ -19,18 +23,12 @@
 }
 
 \title{HW4 -- Traveling Salesperson Problem\\[2pt]\large Branch and Bound}
-\author{Student ID: \texttt{112000112} \quad Name: \texttt{施又歆}}
-\date{Design and Analysis of Algorithms}
+\author{Student ID: \texttt{112000112 , 112080008} \quad Name: \texttt{施又歆 , 黃品瑄}}
 
 \begin{document}
 \maketitle
 
 \section{Pseudocode of the Branch-and-Bound Algorithm}
-
-The algorithm performs a depth-first search over the space of partial
-Hamiltonian paths starting at city 1.  At every node it maintains a lower
-bound on the cost of completing the tour; if that bound is no better than the
-current best tour, the subtree is pruned.
 
 \subsection*{Lower bound}
 
@@ -129,53 +127,50 @@ Procedure  DFS(current, depth, cost, remMin)
 
 \section{Running-time Comparison}
 
-Random instances were generated with edge costs drawn uniformly from
-$[1,9999]$ (diagonal $10000$) for each $n \in \{5,6,\dots,16\}$.  For every
-$n$ the branch-and-bound program was run on \textbf{3} random instances and
-the mean execution time was recorded; the brute-force program was run on
-\textbf{1} instance per $n$.  All timings were measured by \texttt{clock()}
-inside the program (search only -- I/O excluded).  Brute force is $O(n!)$
-and becomes infeasible from $n=15$; data points beyond $n=14$ are omitted
-from its curve.
-
 \subsection*{Raw timings (seconds)}
 
 \begin{center}
-\small
-\begin{tabular}{rrr}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{r ccccc cc}
 \toprule
-$n$ & Brute Force & Branch \& Bound (avg of 3) \\
+    & \multicolumn{5}{c}{Branch \& Bound (seconds)} & \multicolumn{2}{c}{Brute Force (seconds)} \\
+\cmidrule(lr){2-6}\cmidrule(lr){7-8}
+$n$ & Data 1 & Data 2 & Data 3 & avg & $\log_{10}$avg & Data 1 & $\log_{10}$time \\
 \midrule
- 5 & 0.000010 & 0.000006 \\
- 6 & 0.000006 & 0.000006 \\
- 7 & 0.000021 & 0.000005 \\
- 8 & 0.000094 & 0.000011 \\
- 9 & 0.000639 & 0.000049 \\
-10 & 0.005324 & 0.000096 \\
-11 & 0.053115 & 0.000178 \\
-12 & 0.605313 & 0.000214 \\
-13 & 7.706000 & 0.000643 \\
-14 & 105.621755 & 0.002436 \\
-15 & --- (omitted) & 0.013810 \\
-16 & --- (omitted) & 0.011212 \\
+ 5 & 0.000007 & 0.000004 & 0.000003 & 0.000005 & $-5.331$ & 0.000016    & $-4.796$ \\
+ 6 & 0.000007 & 0.000003 & 0.000007 & 0.000006 & $-5.247$ & 0.000008    & $-5.097$ \\
+ 7 & 0.000009 & 0.000005 & 0.000007 & 0.000007 & $-5.155$ & 0.000020    & $-4.699$ \\
+ 8 & 0.000022 & 0.000012 & 0.000001 & 0.000012 & $-4.933$ & 0.000094    & $-4.027$ \\
+ 9 & 0.000080 & 0.000012 & 0.000055 & 0.000049 & $-4.310$ & 0.000654    & $-3.184$ \\
+10 & 0.000083 & 0.000192 & 0.000015 & 0.000097 & $-4.014$ & 0.005374    & $-2.270$ \\
+11 & 0.000066 & 0.000185 & 0.000329 & 0.000193 & $-3.714$ & 0.053291    & $-1.273$ \\
+12 & 0.000261 & 0.000094 & 0.000301 & 0.000219 & $-3.660$ & 0.620553    & $-0.207$ \\
+13 & 0.000331 & 0.001015 & 0.000601 & 0.000649 & $-3.188$ & 7.786247    & $\phantom{-}0.891$ \\
+14 & 0.001949 & 0.003494 & 0.001850 & 0.002431 & $-2.614$ & 106.276025  & $\phantom{-}2.026$ \\
+15 & 0.006952 & 0.028169 & 0.006962 & 0.014028 & $-1.853$ & --- (> 180) & --- \\
+16 & 0.000876 & 0.001260 & 0.031666 & 0.011267 & $-1.948$ & --- (> 180) & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\subsection*{Plot}
+\subsection*{Plots}
 
-\begin{center}
-\includegraphics[width=0.9\linewidth]{timing_plot.png}
-\end{center}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{timing_plot.png}
+\caption{Running time on a logarithmic y-axis (seconds).}
+\end{figure}
 
-The brute-force curve grows by roughly a factor of $n$ per step, exactly as
-predicted by $(n-1)!$.  The branch-and-bound curve grows much more slowly;
-its small dip from $n=15$ to $n=16$ is a typical sampling effect when
-pruning becomes especially effective on a particular random instance.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{timing_plot_log.png}
+\end{figure}
+
+n = 15 and n = 16 are predicted more than 25 min and 6 hours respectively, so they are not shown in the graph.
 
 \paragraph{Hardware / software.}
-CPU: Apple M-series (local), grader CPU: Intel i7-10700 / CentOS Linux 8.
-Compiler: \texttt{g++ -std=c++11 -O2}.  Plot produced with
-\texttt{matplotlib} on Python~3.
-
+Local benchmark machine: MacBook (Mac15,12) with Apple~M3 CPU, 24~GB RAM,
+macOS~14.5.  Compiler: Apple~clang~15.0 invoked as
+\texttt{g++ -std=c++11 -O2}. 
 \end{document}

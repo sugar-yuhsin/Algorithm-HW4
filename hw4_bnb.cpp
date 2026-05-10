@@ -61,6 +61,7 @@ int main() {
         return 0;
     }
 
+    // 找每個 row 最小的
     minOut.assign(n, INT_MAX);
     int totalMin = 0;
     for (int i = 0; i < n; ++i) {

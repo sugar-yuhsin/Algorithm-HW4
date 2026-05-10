@@ -149,9 +149,10 @@ effective as the instance gives the algorithm more exploitable structure.
 
 ### 2.3 Hardware / Software
 
-* CPU: Apple M-series (local), grader CPU: Intel i7-10700 / CentOS 8
-* Compiler: `g++ -std=c++11 -O2`
-* Plot: `matplotlib` (Python 3)
+* Local benchmark machine: MacBook (Mac15,12), Apple M3 CPU, 24 GB RAM, macOS 14.5
+* Grader machine (per spec): Intel i7-10700, CentOS Linux 8
+* Compiler: Apple clang 15.0, invoked as `g++ -std=c++11 -O2`
+* Plot: `matplotlib` 3.10 on Python 3.11
 
 ---
 

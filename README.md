@@ -88,7 +88,7 @@ STUDENT_ID = "112000112"
 
 ```sh
 python3 plot.py                                       # 重畫 timing_plot.png
-pdflatex -interaction=nonstopmode report.tex          # 產生新的 report.pdf
+xelatex -interaction=nonstopmode report.tex          # 產生新的 report.pdf
 rm -f report.aux report.log report.out                # （可選）清編譯垃圾
 ```
 
@@ -104,7 +104,7 @@ rm -f report.aux report.log report.out                # （可選）清編譯垃
 chmod +x benchmark.sh
 MAX_BF=14 ./benchmark.sh        # MAX_BF=brute force 跑到的最大 n
 python3 plot.py                 # 重畫圖
-pdflatex -interaction=nonstopmode report.tex
+xelatex -interaction=nonstopmode report.tex
 ```
 
 `MAX_BF` 預設 13。設 14 約需 2 分鐘；設 ≥15 不切實際（n=15 約 25 分鐘、n=16 約 6 小時）。
@@ -133,11 +133,14 @@ pdflatex -interaction=nonstopmode report.tex
 
 ## 5. 執行環境
 
-| 項目     | 本機              | 助教評分機              |
-|----------|-------------------|--------------------------|
-| OS       | macOS (Darwin)    | CentOS Linux 8           |
-| CPU      | Apple M-series    | Intel i7-10700           |
-| 編譯器   | clang/g++ 15.0    | g++                      |
-| Flags    | `-std=c++11 -O2`  | 視 makefile 而定         |
-| Timeout  | -                 | 3 分鐘                   |
+| 項目     | 本機                          | 助教評分機              |
+|----------|-------------------------------|--------------------------|
+| 機型     | MacBook (Mac15,12)            | -                        |
+| OS       | macOS 14.5 (Darwin 23.5)      | CentOS Linux 8           |
+| CPU      | Apple M3                      | Intel i7-10700           |
+| RAM      | 24 GB                         | -                        |
+| 編譯器   | Apple clang 15.0 (`g++` alias)| g++                      |
+| Flags    | `-std=c++11 -O2`              | 視 makefile 而定         |
+| Python   | 3.11 + matplotlib 3.10        | -                        |
+| Timeout  | -                             | 3 分鐘                   |
 # Algorithm-HW4
